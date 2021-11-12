@@ -11,6 +11,8 @@
 
   <Container :postData="postData" />
 
+  <button @click="more">더보기</button>
+
   <div class="footer">
     <ul class="footer-button-plus">
       <input type="file" id="file" class="inputfile" />
@@ -22,16 +24,28 @@
 <script>
 import Container from './components/Container.vue'
 import postData from './assets/postData'
+import axios from 'axios'
 
 export default {
   name: 'App',
   data() {
     return {
-      postData
+      postData,
+      버튼누른거 : 0
     }
   },
   components: {
     Container
+  },
+  methods: {
+    more() {
+      axios.get(`https://codingapple1.github.io/vue/more${this.버튼누른거}.json`)
+        .then((결과) => {
+          console.log(결과.data)
+          this.postData.push(결과.data)
+          this.버튼누른거 ++
+        })
+    }
   }
 }
 </script>

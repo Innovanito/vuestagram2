@@ -3,7 +3,6 @@
     <div class="profile" :style="{ backgroundImage :  `url(${postData.userImage})`}"></div>
     <span class="profile-name">{{postData.name}}</span>
   </div>
-  <!-- <div class="post-body" :style="{ backgroundImage : `url(${post.Data.postImage})`}"></div> -->
   <div class="post-body" :style="{ backgroundImage : `url(${postData.postImage})`}"></div>
   <div class="post-content">
     <p>❤️ {{postData.likes}} likes</p>
