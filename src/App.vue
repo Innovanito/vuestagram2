@@ -4,18 +4,19 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li v-if="step == 1" @click="step ++">Next</li>
+      <li v-if="step == 2" @click="publish">발행</li>
     </ul>
     <img src="./assets/logo.png" class="logo">
   </div>
 
-  <Container :postData="postData" />
+  <Container @write="작성한글 = $event" :postData="postData" :step="step" :이미지="이미지" />
 
-  <button @click="more">더보기</button>
+  <button v-if="step==0" @click="more">더보기</button>
 
-  <div class="footer">
+  <div v-if="step == 0" class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input @change="upload" accept="image/*" type="file" id="file" class="inputfile" />
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
@@ -30,14 +31,31 @@ export default {
   name: 'App',
   data() {
     return {
+      step : 0,
       postData,
-      버튼누른거 : 0
+      버튼누른거 : 0,
+      이미지 : '',
+      작성한글: '',
     }
   },
   components: {
     Container
   },
   methods: {
+    publish() {
+      var 내게시물 = {
+        name: "김하경",
+        userImage: "https://placeimg.com/100/100/arch",
+        postImage: this.이미지,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: this.작성한글,
+        filter: "perpetua"
+      };
+      this.postData.unshift(내게시물)
+      this.step = 0
+    },
     more() {
       axios.get(`https://codingapple1.github.io/vue/more${this.버튼누른거}.json`)
         .then((결과) => {
@@ -45,6 +63,14 @@ export default {
           this.postData.push(결과.data)
           this.버튼누른거 ++
         })
+    },
+    upload(e) {
+      var 파일 = e.target.files;
+      console.log(파일)
+      let url = URL.createObjectURL(파일[0])
+      console.log(url)
+      this.이미지 = url;
+      this.step = 1;
     }
   }
 }
