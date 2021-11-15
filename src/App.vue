@@ -1,14 +1,16 @@
 <template>
   <div class="header">
     <ul class="header-button-left">
-      <li>Cancel</li>
+      <li v-if="step == 1 || step == 2" @click="step = 0">Cancel</li>
     </ul>
     <ul class="header-button-right">
       <li v-if="step == 1" @click="step ++">Next</li>
       <li v-if="step == 2" @click="publish">발행</li>
     </ul>
-    <img src="./assets/logo.png" class="logo">
+    <img src="./assets/logo.png" class="logo"> 
   </div>
+
+  <h5>안녕 {{ $store.state.name }}</h5>
 
   <Container @write="작성한글 = $event" :postData="postData" :step="step" :이미지="이미지" />
 
@@ -36,7 +38,13 @@ export default {
       버튼누른거 : 0,
       이미지 : '',
       작성한글: '',
+      newFilter: '',
     }
+  },
+  mounted() {
+    this.emitter.on('sendFilter', (a) => {
+      this.newFilter = a
+    })
   },
   components: {
     Container
@@ -51,7 +59,7 @@ export default {
         date: "May 15",
         liked: false,
         content: this.작성한글,
-        filter: "perpetua"
+        filter: this.newFilter
       };
       this.postData.unshift(내게시물)
       this.step = 0
