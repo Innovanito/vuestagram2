@@ -9,8 +9,12 @@
     </ul>
     <img src="./assets/logo.png" class="logo"> 
   </div>
+<!-- store에 있는 mutation함수를 사용하는 법
+  <h4>안녕 {{ $store.state.name }}</h4>
+  <button @click="$store.commit('이름변경')">이름변경버튼1</button>
 
-  <h5>안녕 {{ $store.state.name }}</h5>
+  <h4>내 나이는 {{ $store.state.age }} 살이야</h4>
+  <button @click="$store.commit('나이변경')">내년 내 나이 버튼</button> -->
 
   <Container @write="작성한글 = $event" :postData="postData" :step="step" :이미지="이미지" />
 

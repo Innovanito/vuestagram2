@@ -3,9 +3,9 @@
     <div class="profile" :style="{ backgroundImage :  `url(${postData.userImage})`}"></div>
     <span class="profile-name">{{postData.name}}</span>
   </div>
-  <div :class="`post-body ${postData.filter}`" :style="{ backgroundImage : `url(${postData.postImage})`}"></div>
+  <div @click="$store.commit('changeLike')" :class="`post-body ${postData.filter}`" :style="{ backgroundImage : `url(${postData.postImage})`}"></div>
   <div class="post-content">
-    <p>❤️ {{postData.likes}} likes</p>
+    <p >❤️{{ $store.state.likes[postData.postNumber] }}  likes</p>
     <p><strong>{{ postData.name }}</strong> {{ postData.content }}</p>
     <p class="date">{{ postData.date }}</p>
   </div>
@@ -13,6 +13,13 @@
 
 <script>
 export default {
+  data() {
+    return {
+    }
+  },
+  mounted() {
+    this.$store.state.postOrder = this.postData.postNumber
+  },
   props: {
     postData : Array
   }
