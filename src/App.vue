@@ -16,7 +16,13 @@
   <h4>내 나이는 {{ $store.state.age }} 살이야</h4>
   <button @click="$store.commit('나이변경')">내년 내 나이 버튼</button> -->
 
+  <p> {{ $store.state.more}}</p>
+  <button @click="$store.dispatch('getData')">더보기버튼</button>
+
+  <h4>{{name}}</h4>
+
   <Container @write="작성한글 = $event" :postData="postData" :step="step" :이미지="이미지" />
+
 
   <button v-if="step==0" @click="more">더보기</button>
 
@@ -43,6 +49,7 @@ export default {
       이미지 : '',
       작성한글: '',
       newFilter: '',
+      카운터 : 0
     }
   },
   mounted() {
@@ -53,7 +60,16 @@ export default {
   components: {
     Container
   },
+  computed : {
+    name() {
+      return this.$store.state.name
+    }
+  },
   methods: {
+    now() {
+      return new Date()
+    },
+
     publish() {
       var 내게시물 = {
         name: "김하경",
