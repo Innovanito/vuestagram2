@@ -4,6 +4,7 @@
       <li v-if="step == 1 || step == 2" @click="step = 0">Cancel</li>
     </ul>
     <ul class="header-button-right">
+      <li v-if="step == 0" @click="step = 3">팔로워 </li>
       <li v-if="step == 1" @click="step ++">Next</li>
       <li v-if="step == 2" @click="publish">발행</li>
     </ul>
@@ -16,10 +17,10 @@
   <h4>내 나이는 {{ $store.state.age }} 살이야</h4>
   <button @click="$store.commit('나이변경')">내년 내 나이 버튼</button> -->
 
-  <p> {{ $store.state.more}}</p>
+  <!-- <p> {{ $store.state.more}}</p>
   <button @click="$store.dispatch('getData')">더보기버튼</button>
 
-  <h4>{{name}}</h4>
+  <h4>{{name}}</h4> -->
 
   <Container @write="작성한글 = $event" :postData="postData" :step="step" :이미지="이미지" />
 
